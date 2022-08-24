@@ -1,13 +1,21 @@
 import React, { useState } from 'react'
 import './signup.css';
 import axios from 'axios';
+import swal from 'sweetalert';
 
+import { useNavigate } from 'react-router-dom';
 const SignUp = () => {
     //intailizing state 
+    const navigate = useNavigate();
+
     const [signUp,setSignUp] = useState(true);
     const [loginForm,setLoginForm]= useState({userName:"",password:""})
     const [sigInForm,setSignInForm]= useState({userName:"",password:"",email:""})
     
+    const header = {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      }
     //handling siginForm
     const ChangeSignUp = (e) => {
         const {name,value} = e.target;
@@ -34,13 +42,50 @@ const SignUp = () => {
     //updateing siginform
      const updateSigUp = async(e) => {
         e.preventDefault();
-        console.log(sigInForm);
+        if(sigInForm.userName === "" || sigInForm.email ==="" || sigInForm.password === "") return swal({
+            title: "Error",
+            text: "Please all the field!",
+            icon: "error",
+          });
+        try {
+            const sendFrom = await axios.post(`${process.env.REACT_APP_SERVER_URL}/signUp`,{headers: header , data:sigInForm})
+            if(sendFrom.data.status === 'sucess') swal({icon: "success",  title: "User created sucessfully"}); setSignUp(!signUp); setSignInForm({userName:"",email:"",password:""});
+        } catch (error) {
+            swal({
+                title: "Error",
+                text: error.response.data.message,
+                icon: "error",
+              });
+              
+        }
      }
 
      //updateing login 
      const updateLogin = async (e) => {
         e.preventDefault();
-        console.log(loginForm);
+        if(loginForm.userName === ""  || loginForm.password === "") return swal({
+            title: "Error",
+            text: "Please all the field!",
+            icon: "error",
+          });
+          try {
+              const sendFrom = await axios.post(`${process.env.REACT_APP_SERVER_URL}/login`,{headers: header , data:loginForm})
+              if(sendFrom.data.status === 'sucess'){
+                if(sendFrom.data.token){
+                    const validateToken = await axios.get(`${process.env.REACT_APP_SERVER_URL}/validate`,{headers: {Accept: "application/json","Content-Type": "application/json;charset=UTF-8", Authorization: `Bearer ${sendFrom.data.token}`}});
+                    if(validateToken.status === 200) console.log("login sucess");navigate('/');
+                    ;
+
+
+                }
+              }
+          } catch (error) {
+            swal({
+                title: "Error",
+                text: error.response.data.message,
+                icon: "error",
+              });
+        }
      }
   return (
     <div className='signUp-container'>
@@ -80,12 +125,12 @@ const SignUp = () => {
                 <div className="overlay-panel overlay-left">
                     <h1>Welcome Back!</h1>
                     <p className='signUp-para'> To keep connected with us please login with your personal info</p>
-                    <button className="ghost signUp-btn" id="signIn" onClick={()=>setSignUp(!signUp)}>Sign In</button>
+                    <button className="ghost signUp-btn" id="signIn" onClick={()=>{setSignUp(!signUp) ; setSignInForm({userName:"",email:"",password:""})}}>Sign In</button>
                 </div>
                 <div className="overlay-panel overlay-right">
                     <h1>Hello, Friend!</h1>
                     <p className='signUp-para'> Enter your personal details and start journey with us</p>
-                    <button className="ghost signUp-btn" id="signUp" onClick={()=>setSignUp(!signUp)}>Sign Up</button>
+                    <button className="ghost signUp-btn" id="signUp" onClick={() => {setSignUp(!signUp) ; setLoginForm({userName:"",password:""})}}>Sign Up</button>
                 </div>
             </div>
         </div>
