@@ -17,6 +17,7 @@ const newUserSchema = new mongoose.Schema({
     password:String,
     email:String,
 }) 
+newUserSchema.index({userName:'text'})
 
 //creating new document for storing data
 const newUser = new mongoose.model("User",newUserSchema)

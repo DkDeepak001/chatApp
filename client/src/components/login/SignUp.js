@@ -88,15 +88,15 @@ const SignUp = () => {
                 }
               }
           } catch (error) {
-            // if(error.response.data.message){
-            //     swal({
-            //         title: "Error",
-            //         text: error.response.data.message,
-            //         icon: "error",
-            //       });
-            // }else{
+            if(error.response.data.message){
+                swal({
+                    title: "Error",
+                    text: error.response.data.message,
+                    icon: "error",
+                  });
+            }else{
                 console.log(error);
-            // }
+            }
         }
      }
   return (

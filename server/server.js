@@ -4,6 +4,7 @@ const app = express();
 const cors = require('cors');
 const User = require('./models/newUserDB');
 const jwt = require("jsonwebtoken");
+const search = require("./models/searchDB");
 
 //intializing express json 
 app.use(express.json());
@@ -55,11 +56,17 @@ app.route("/validate")
         res.status(200).json({status:"sucess" , username : req.user})
     })
 
-
+//search Querry
+app.route("/search")
+    .get(async(req,res) => {
+        const response = await search.searchUser(req.query.s);
+        if(response.status == 'sucess') res.status(200).json(response)
+        if(response.status == 'error') res.status(403).json(response)
+    })
 
 //starting server 
 if(process.env.MODE === "development"){
-    app.listen(5000,()=>{``
+    app.listen(5000,()=>{
         console.log("server is listening on port 5000")
     })
 }else if(process.env.MODE === "production"){
