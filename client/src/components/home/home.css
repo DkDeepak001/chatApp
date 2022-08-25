@@ -70,20 +70,34 @@
 
 .resultBox li{
   list-style: none;
-  padding: 8px 12px;
+  padding: 15px 12px;
   display: none;
   width: 100%;
   cursor: default;
   border-radius: 3px;
 }
 
+
 .searchInput.active .resultBox li{
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .resultBox li:hover{
   background: #efefef;
 }
-
+.add-btn{
+  background-color: #644bff;
+  border: none;
+  padding: 7px 25px;
+  color: rgb(240, 240, 240);
+  font-size: 11px;
+  cursor: pointer;
+}
+.searchResult-dropdown p{
+  font-size: 18px;
+  font-weight: 400;
+}
 .searchInput .icon{
   position: absolute;
   right: 0px;

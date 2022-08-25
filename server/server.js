@@ -58,8 +58,8 @@ app.route("/validate")
 
 //search Querry
 app.route("/search")
-    .get(async(req,res) => {
-        const response = await search.searchUser(req.query.s);
+    .get(validateToken ,async(req,res) => {
+        const response = await search.searchUser(req.query.s, req.user);
         if(response.status == 'sucess') res.status(200).json(response)
         if(response.status == 'error') res.status(403).json(response)
     })
