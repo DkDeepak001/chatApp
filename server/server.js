@@ -16,10 +16,9 @@ async function validateToken (req,res,next){
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if(token == null) return res.status(401).json({status:"error", message:"Token not found"})
-    console.log(token);
     const decoded = jwt.verify(token,process.env.JWT_KEY ,(err,usr) => {
         if(err) return res.status(403).json({message:"token not valid"})
-        console.log(usr)
+        req.user = usr.username
         next()
     });
     
@@ -52,7 +51,8 @@ app.route("/signUp")
 //validataing token 
 app.route("/validate")
     .get(validateToken ,async(req,res) => {
-        res.status(200).json({status:"sucess"})
+        console.log(req.user);
+        res.status(200).json({status:"sucess" , username : req.user})
     })
 
 
