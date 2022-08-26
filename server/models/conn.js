@@ -20,8 +20,31 @@ const newUserSchema = new mongoose.Schema({
 newUserSchema.index({userName:'text'})
 
 //creating new document for storing data
-const newUser = new mongoose.model("User",newUserSchema)
+const newUser = new mongoose.model("User",newUserSchema);
 
+
+
+
+//creating new inbox schemea
+const newInboxSchema = new mongoose.Schema({
+    userId:String,
+    friendId:String,
+}) 
+const inbox = new mongoose.model("Inbox",newInboxSchema);
+
+//creating new message schemea
+const newMessageSchema = new mongoose.Schema({
+    messageID : String,
+    messageArr:[
+        {
+            reciverName:String,
+            senderName:String,
+            message:String,
+            timeStamp:String
+        }
+    ]
+}) 
+const Message = new mongoose.model("Message",newMessageSchema);
 module.exports = {
-    newUser
+    newUser,inbox,Message
 }

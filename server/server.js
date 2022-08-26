@@ -5,6 +5,7 @@ const cors = require('cors');
 const User = require('./models/newUserDB');
 const jwt = require("jsonwebtoken");
 const search = require("./models/searchDB");
+const message = require('./models/messageDB');
 
 //intializing express json 
 app.use(express.json());
@@ -17,6 +18,7 @@ async function validateToken (req,res,next){
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if(token == null) return res.status(401).json({status:"error", message:"Token not found"})
+    req.token = token
     const decoded = jwt.verify(token,process.env.JWT_KEY ,(err,usr) => {
         if(err) return res.status(403).json({message:"token not valid"})
         req.user = usr.username
@@ -63,7 +65,31 @@ app.route("/search")
         if(response.status == 'sucess') res.status(200).json(response)
         if(response.status == 'error') res.status(403).json(response)
     })
-
+    
+app.route("/addToMessage")
+    .post(validateToken , async(req,res) => {
+        const response  = await message.message(req.body.data);
+        if(response.status == 'sucess') res.status(200).json(response);
+        
+    })
+    
+app.route("/fetchInbox")
+    .get(validateToken , async (req,res) => {
+        const response = await message.fetchInbox(req.token);
+        if(response.status == 'sucess') res.status(200).json(response);
+    })
+    
+app.route("/fetchMessage")
+    .post(async(req,res) => {
+        const response = await message.fetchMessage(req.body.data.messageId);
+        if(response.status == 'sucess') res.status(200).json(response);
+        
+    })
+    app.route("/sendMessage")
+    .post(async(req,res) => {
+        const response = await message.sendMessage(req.body.data);
+        if(response.status == 'sucess') res.status(200).json(response);
+    })
 //starting server 
 if(process.env.MODE === "development"){
     app.listen(5000,()=>{

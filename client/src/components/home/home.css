@@ -8,23 +8,168 @@
 
 .container-home{
     width: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    padding-top: 20px;
+    padding: 20px;
 }
 .left-container{
     width: 65%;
-}
-.right-container{
-    width: 35%;
+    height: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+
+}
+
+.left-container-header{
+  display: flex;
+  align-items: center;
+  height: 10vh;
+}
+.message-Container{
+  height: 95vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.left-messageContainerlist{
+
+}
+.friendsList{
+  list-style: none;
+  padding: 10px 0px;
+}
+.left-messageContainer{
+  width: 25%;
+  height: 100%;
+  overflow: auto;
+}
+.profilePic-left{
+  height: 35px;
+  width: 35px;
+  background-color: rgb(21, 0, 255);
+  border-radius: 50px;
+  margin-right: 10px;
+}
+.right-messageContainer{
+  width: 75%;
+  height: 100%;
+
+}
+.friendsList:hover{
+  background: #efefef;
+
+}
+
+.header-messageBox{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 10%;
+}
+.main-messageBox{
+  width: 100%;
+  height: 75%;
+  overflow: auto;
+}
+.alignment{
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+.senderMsg{
+  max-width: 90%;
+  background-color: thistle;
+  margin: .5% 0%;
+  float: right;
+  border-radius: 0px 20px 0px 20px;
+  padding: 1% 2%;
+  font-size: 14px;
+}
+.reciverMsg{
+  float: left;
+  max-width: 90%;
+  background-color: tan;
+  margin: .5% 0%;
+  border-radius: 20px 0px 20px 0px;
+  padding: 1% 2%;
+  font-size: 14px;
+}
+
+
+.footer-messageBox{
+  width: 100%;
+  height: 15%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.messageTextBox{
+  height: 80%;
+  width: 90%;
+  outline: none;
+  border: none;
+  padding:10px 20px ;
+  font-size: 18px;
+  resize: none;
+  border: .1px solid rgba(0, 0, 0, 0.457);
+}
+.sendBtn{
+  width: 10%;
+  height: 80%;
+  border: none;
+  background-color: green;
+  color: #efefef;
+}
+.messageTextBox::-webkit-scrollbar {
+  display: none;
+}
+
+.right{
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+  
+}
+
+.right-container-header{
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 15vh;
+}
+.header-profile{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.profilePic{
+  height: 45px;
+  width: 45px;
+  background-color: rgb(21, 0, 255);
+  border-radius: 50px;
+  margin-right: 10px;
+}
+
+.right-container{
+  height: 75vh;
+  display: flex;
+  justify-content: center;
+  width: 75%;
+    
 }
 
 .home-sub-container{
-    width: 90%;
+    width: 100%;
 }
 ::selection{
   color: #fff;
